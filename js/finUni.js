@@ -47,7 +47,7 @@ function initMap() {
     var position = universities[i].location;
     var name = universities[i].name;
     var establishedYear = universities[i].Established_Year;
-    console.log(name)
+    //console.log(name)
 
     //create the marker per university and push into markers array.
     var marker = new google.maps.Marker({
@@ -61,6 +61,9 @@ function initMap() {
     });
     // push the marker to the array of markers
     markers.push(marker);
+
+    // Pass the marker from the initMap to the FinnishUnivesity ko observarble array
+    fU.finnishUniversitiesList()[i].marker = marker;
 
     //Extend the boundaries of the map for each marker
     bounds.extend(marker.position);
@@ -89,6 +92,7 @@ function populateInfoWindow(marker, infowindow){
 };
 
 var FinnishUniversitiesViewModel = function() {
+
   var self = this;
 
   var finnishUniverity = function(university){
@@ -96,18 +100,25 @@ var FinnishUniversitiesViewModel = function() {
     //this.marker = university.marker
   };
 
+  //Knockout observable array is created
   self.finnishUniversitiesList = ko.observableArray([]);
 
+  //List of Universities is pushed into the Knockout observable array
   universities.forEach(function(university){
-    self.finnishUniversitiesList.push( new finnishUniverity(university))
+    self.finnishUniversitiesList.push( new finnishUniverity(university) )
   });
 
-
+  // This function initiates displays the required info on the maps marker 
+  //when the observarble array items is clicked
+  self.displayMarkerInfo = function(university){
+    console.log('finnishUniversitiesList clicked')
+    google.maps.event.trigger(university.marker, 'click')
+  };
 
 };
 
 
-// A global variable to store intance of View Model
+// A global variable to store an instance of View Model
 var fU = new FinnishUniversitiesViewModel();
 
 
