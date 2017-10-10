@@ -12,8 +12,15 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
+    <div>
+      <h3>Universities in Finland</h3>
+      <input type="text" name="UniInput">
+      <ul data-bind="foreach:finnishUniversitiesList">
+        <li data-bind="text: name"></li>
+      </ul>
+    </div>
+    <div id="map"></div>
 
-      <div id="map"></div>
 
     <!--Container div ends-->
 

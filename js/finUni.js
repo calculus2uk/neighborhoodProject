@@ -5,6 +5,25 @@ var map, largeInfoWindow;
 var markers = [];
 
 
+// Listing the Multidisciplinary universities. These is what will be shown to the user
+// Source wikipedia 10.10.2017 
+// https://en.wikipedia.org/wiki/List_of_universities_in_Finland
+var universities = [
+
+  {name: 'University of Helsinki', location: {lat: 60.172635, lng: 24.951042}, Established_Year: 1640},
+  {name: 'Åbo Akademi University', location: {lat: 60.450987, lng: 22.277600}, Established_Year: 1918},
+  {name: 'University of Turku',  location: {lat: 60.456297, lng: 22.285114 }, Established_Year: 1920},
+  {name: 'University of Tampere', location: {lat: 61.493745, lng: 23.778735}, Established_Year: 1925},
+  {name: 'University of Oulu', location: {lat: 65.059318, lng: 25.466294}, Established_Year: 1958},
+  {name: 'University of Lapland', location: {lat: 66.485863, lng: 25.715528}, Established_Year: 1979},
+  {name: 'University of Eastern Finland', location: {lat: 62.603598, lng: 29.744203}, Established_Year: 2010},
+  {name: 'University of Vaasa', location: {lat: 63.105084, lng: 21.591550}, Established_Year: 1968},
+  {name: 'University of Jyväskylä', location: {lat: 62.236532, lng: 25.731634}, Established_Year: 1934}
+
+];
+
+
+
 // Function to initialize the map within the map div
 function initMap() {
 
@@ -12,23 +31,6 @@ function initMap() {
   center: {lat: 60.172635, lng: 24.951042},
   zoom: 13
   });
-
-  // Listing the Multidisciplinary universities. These is what will be shown to the user
-  // Source wikipedia 10.10.2017 
-  // https://en.wikipedia.org/wiki/List_of_universities_in_Finland
-  var universities = [
-
-    {name: 'University of Helsinki', location: {lat: 60.172635, lng: 24.951042}, Established_Year: 1640},
-    {name: 'Åbo Akademi University', location: {lat: 60.450987, lng: 22.277600}, Established_Year: 1918},
-    {name: 'University of Turku',  location: {lat: 60.456297, lng: 22.285114 }, Established_Year: 1920},
-    {name: 'University of Tampere', location: {lat: 61.493745, lng: 23.778735}, Established_Year: 1925},
-    {name: 'University of Oulu', location: {lat: 65.059318, lng: 25.466294}, Established_Year: 1958},
-    {name: 'University of Lapland', location: {lat: 66.485863, lng: 25.715528}, Established_Year: 1979},
-    {name: 'University of Eastern Finland', location: {lat: 62.603598, lng: 29.744203}, Established_Year: 2010},
-    {name: 'University of Vaasa', location: {lat: 63.105084, lng: 21.591550}, Established_Year: 1968},
-    {name: 'University of Jyväskylä', location: {lat: 62.236532, lng: 25.731634}, Established_Year: 1934}
-
-  ];
 
   // initialising the info window
   largeInfoWindow = new google.maps.InfoWindow();
@@ -52,6 +54,7 @@ function initMap() {
       map:map,
       position: position,
       name: name,
+      establishedYear: establishedYear,
       animation: google.maps.Animation.DROP,
     
       id: i
@@ -76,13 +79,37 @@ function populateInfoWindow(marker, infowindow){
   //A check to see if infowindow is not already open on the marker
   if (infowindow.marker != marker) {
     infowindow.marker = marker;
-    infowindow.setContent('<div>' + marker.name + marker.establishedYear + '</div>');
+    infowindow.setContent('<div>' + marker.name + '<br>'+ 'Established: ' + marker.establishedYear + '</div>');
     infowindow.open(map, marker);
     //clear the marker propety if infowwindow is closed.
     infowindow.addListener('closeclick', function() {
       infowindow.setMarker(null);
     })
   }
-}
+};
+
+var FinnishUniversitiesViewModel = function() {
+  var self = this;
+
+  var finnishUniverity = function(university){
+    this.name = university.name;
+    //this.marker = university.marker
+  };
+
+  self.finnishUniversitiesList = ko.observableArray([]);
+
+  universities.forEach(function(university){
+    self.finnishUniversitiesList.push( new finnishUniverity(university))
+  });
 
 
+
+};
+
+
+// A global variable to store intance of View Model
+var fU = new FinnishUniversitiesViewModel();
+
+
+// Apply the bindings to the global instance
+ko.applyBindings(fU);
