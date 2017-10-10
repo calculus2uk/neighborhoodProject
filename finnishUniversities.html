@@ -14,8 +14,8 @@
   <body>
     <div>
       <h3>Universities in Finland</h3>
-      <input type="text" name="UniInput">
-      <ul data-bind="foreach: finnishUniversitiesList">
+      <input  data-bind="textInput: uniSearchInput" type="text">
+      <ul data-bind="foreach: filterUniversity">
         <li data-bind="text: name, click:$parent.displayMarkerInfo"></li>
       </ul>
     </div>

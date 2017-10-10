@@ -40,8 +40,14 @@ function initMap() {
   // a variable bounds is created
   var bounds = new google.maps.LatLngBounds();
 
-  //Using the universities array to create an array of markers on initialize
+  // default Markers style
+  var defaultIcon = makeMarkerIcon('0091ff');
 
+  // Create a "highlighted location" marker color for when the user
+  // mouses over the marker.
+  var highlightedIcon = makeMarkerIcon('FFFF24');
+
+  //Using the universities array to create an array of markers on initialize
   for (var i = 0; i < universities.length; i++) {
     //Get the position from the Universities array
     var position = universities[i].location;
@@ -56,7 +62,7 @@ function initMap() {
       name: name,
       establishedYear: establishedYear,
       animation: google.maps.Animation.DROP,
-    
+      icon: defaultIcon,
       id: i
     });
     // push the marker to the array of markers
@@ -72,6 +78,14 @@ function initMap() {
     marker.addListener('click', function() {
       populateInfoWindow(this, largeInfoWindow);
     });
+    //Two event listeners - one for mouseover, one for mouseout,
+      //to change the colors back and forth.
+      marker.addListener('mouseover', function() {
+        this.setIcon(highlightedIcon);
+      });
+      marker.addListener('mouseout', function() {
+        this.setIcon(defaultIcon);
+      });
   }
   map.fitBounds(bounds);
 };
@@ -91,6 +105,29 @@ function populateInfoWindow(marker, infowindow){
   }
 };
 
+// This function takes in a COLOR, and then creates a new marker
+// icon of that color. The icon will be 21 px wide by 34 high, have an origin
+// of 0, 0 and be anchored at 10, 34).
+function makeMarkerIcon(markerColor) {
+   var markerImage = new google.maps.MarkerImage(
+      'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
+      '|40|_|%E2%80%A2',
+      new google.maps.Size(21, 34),
+      new google.maps.Point(0, 0),
+      new google.maps.Point(10, 34),
+      new google.maps.Size(21,34));
+    return markerImage;
+};
+
+
+
+//The FinnishUniversitiesViewModel is created as the ViewModel
+//Initially started withh logic used in KO multiple cats project.
+//Some functions such displayMarkerInfo was written based on the disscussion by 
+//other students and mentors on the Udacity course forum especially 
+//https://discussions.udacity.com/t/location-list-button-array-and-click-events/290058/18
+//Sarah did well explaining how the google.maps.event.trigger works which 
+//initially I was struggling with.
 var FinnishUniversitiesViewModel = function() {
 
   var self = this;
@@ -102,6 +139,9 @@ var FinnishUniversitiesViewModel = function() {
 
   //Knockout observable array is created
   self.finnishUniversitiesList = ko.observableArray([]);
+
+  // filter university observable
+  self.uniSearchInput = ko.observable("");
 
   //List of Universities is pushed into the Knockout observable array
   universities.forEach(function(university){
@@ -115,8 +155,40 @@ var FinnishUniversitiesViewModel = function() {
     google.maps.event.trigger(university.marker, 'click')
   };
 
-};
 
+
+  //Implementing the filter functionality
+  //Started with the discussion here
+  //https://stackoverflow.com/questions/20857594/knockout-filtering-on-observable-array
+  //http://www.knockmeout.net/2011/04/utility-functions-in-knockoutjs.html
+  
+  self.filterUniversity = ko.computed(function(){
+
+    var filter = self.uniSearchInput().toLowerCase();
+
+    if (!filter) {
+
+      return self.finnishUniversitiesList();
+
+    } else {
+
+      return ko.utils.arrayFilter(self.finnishUniversitiesList(), function(searchUniversity) {
+
+        if (searchUniversity.name.toLowerCase().indexOf(filter) !== -1) {
+
+          searchUniversity.marker.setVisible(true)
+        } else {
+
+          searchUniversity.marker.setVisible(false)
+        }
+
+        return searchUniversity.name.toLowerCase().indexOf(filter) !== -1;
+
+      });
+    }
+  })
+
+};
 
 // A global variable to store an instance of View Model
 var fU = new FinnishUniversitiesViewModel();
