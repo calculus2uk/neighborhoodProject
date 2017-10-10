@@ -1,0 +1,88 @@
+// Create a map and the infowindow variable
+var map, largeInfoWindow;
+
+//Creating a global markers array
+var markers = [];
+
+
+// Function to initialize the map within the map div
+function initMap() {
+
+  map = new google.maps.Map(document.getElementById('map'), {
+  center: {lat: 60.172635, lng: 24.951042},
+  zoom: 13
+  });
+
+  // Listing the Multidisciplinary universities. These is what will be shown to the user
+  // Source wikipedia 10.10.2017 
+  // https://en.wikipedia.org/wiki/List_of_universities_in_Finland
+  var universities = [
+
+    {name: 'University of Helsinki', location: {lat: 60.172635, lng: 24.951042}, Established_Year: 1640},
+    {name: 'Åbo Akademi University', location: {lat: 60.450987, lng: 22.277600}, Established_Year: 1918},
+    {name: 'University of Turku',  location: {lat: 60.456297, lng: 22.285114 }, Established_Year: 1920},
+    {name: 'University of Tampere', location: {lat: 61.493745, lng: 23.778735}, Established_Year: 1925},
+    {name: 'University of Oulu', location: {lat: 65.059318, lng: 25.466294}, Established_Year: 1958},
+    {name: 'University of Lapland', location: {lat: 66.485863, lng: 25.715528}, Established_Year: 1979},
+    {name: 'University of Eastern Finland', location: {lat: 62.603598, lng: 29.744203}, Established_Year: 2010},
+    {name: 'University of Vaasa', location: {lat: 63.105084, lng: 21.591550}, Established_Year: 1968},
+    {name: 'University of Jyväskylä', location: {lat: 62.236532, lng: 25.731634}, Established_Year: 1934}
+
+  ];
+
+  // initialising the info window
+  largeInfoWindow = new google.maps.InfoWindow();
+
+
+  //For Adjusting the map boundries to fit the set zoom area
+  // a variable bounds is created
+  var bounds = new google.maps.LatLngBounds();
+
+  //Using the universities array to create an array of markers on initialize
+
+  for (var i = 0; i < universities.length; i++) {
+    //Get the position from the Universities array
+    var position = universities[i].location;
+    var name = universities[i].name;
+    var establishedYear = universities[i].Established_Year;
+    console.log(name)
+
+    //create the marker per university and push into markers array.
+    var marker = new google.maps.Marker({
+      map:map,
+      position: position,
+      name: name,
+      animation: google.maps.Animation.DROP,
+    
+      id: i
+    });
+    // push the marker to the array of markers
+    markers.push(marker);
+
+    //Extend the boundaries of the map for each marker
+    bounds.extend(marker.position);
+
+    //Add click event to open the infowindow on each marker.
+    marker.addListener('click', function() {
+      populateInfoWindow(this, largeInfoWindow);
+    });
+  }
+  map.fitBounds(bounds);
+};
+
+//This function populate the infowindow with the infomation set when the marker is clicked.
+//In this case one info window
+function populateInfoWindow(marker, infowindow){
+  //A check to see if infowindow is not already open on the marker
+  if (infowindow.marker != marker) {
+    infowindow.marker = marker;
+    infowindow.setContent('<div>' + marker.name + marker.establishedYear + '</div>');
+    infowindow.open(map, marker);
+    //clear the marker propety if infowwindow is closed.
+    infowindow.addListener('closeclick', function() {
+      infowindow.setMarker(null);
+    })
+  }
+}
+
+
