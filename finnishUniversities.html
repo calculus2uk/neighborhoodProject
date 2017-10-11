@@ -12,17 +12,36 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
-    <div>
-      <h3>Universities in Finland</h3>
-      <input  data-bind="textInput: uniSearchInput" type="text">
-      <ul data-bind="foreach: filterUniversity">
-        <li data-bind="text: name, click:$parent.displayMarkerInfo"></li>
-      </ul>
-    </div>
-    <div id="map"></div>
 
+    <div class="container-fluid">
+        <nav class="navbar navbar-toggleable-md navbar navbar-inverse bg-inverse navbar fixed-top">
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="#">Project 5</a>
 
-    <!--Container div ends-->
+        </nav>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <span class="badge badge-info"><h2>Multidiciplinary Universities in finland</h2></span>
+          </div>
+        </div><br>
+        <div class="row full">
+        <div class="col-md-4 full" id="list">
+            <h3>Universities</h3>
+            <input  data-bind="textInput: uniSearchInput" type="text">
+            <ul data-bind="foreach: filterUniversity">
+              <li data-bind="text: name, click:$parent.displayMarkerInfo"></li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+          <div class="embed-responsive embed-responsive-21by9" id="map">
+          </div>
+        </div>
+      </div>
+
+    </div><!--Container div ends-->
+    
 
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script
