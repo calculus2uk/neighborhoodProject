@@ -24,6 +24,12 @@ html{
 ul {
   list-style-type: none;
 }
+
 #list{
 	text-align: center;;
+}
+
+#down{
+	position: absolute;
+	float: center;
 }

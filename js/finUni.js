@@ -3,6 +3,8 @@ var map, largeInfoWindow;
 
 //Creating a global markers array
 var markers = [];
+var coffeeShops = [];
+var coffeeShopsNames = [];
 
 
 // Listing the Multidisciplinary universities. These is what will be shown to the user
@@ -68,6 +70,38 @@ function initMap() {
     // push the marker to the array of markers
     markers.push(marker);
 
+    // Setting up foursquare
+
+    var apiUrl = 'https://api.foursquare.com/v2/venues/search';
+    var foursquareClientID = 'ZJ5YPYPYWFUXLYKAHL34C3N5WHHDJ1TQ1E20Z3WYWQHXN0RZ';
+    var foursquareSecret = 'IGJIWX5STYGNY2EYPMHZB1L3NS35BB1C3DEM0XNGUGVL5EIO';
+    var foursquareVersion =  '20171012';
+    var lat = position.lat;
+    var lng = position.lng;
+    var query = 'coffee';
+
+    var foursquareApiUrl = apiUrl + '?ll='+ lat + ',' + lng + '&query='+ query + '&client_id=' + foursquareClientID +  '&client_secret=' + foursquareSecret +'&v=' + foursquareVersion;
+    //console.log(foursquareApiUrl);
+
+    $.ajax({
+      url:foursquareApiUrl,
+      dataType: 'json',
+      data: {
+        foursquareClientID: foursquareClientID,
+        foursquareSecret: foursquareSecret,
+
+        async: true
+      },
+      success: function(data) {
+        
+        var venue = data.response.venues;
+
+        console.log(venue)
+        }
+
+    })
+
+
     // Pass the marker from the initMap to the FinnishUnivesity ko observarble array
     fU.finnishUniversitiesList()[i].marker = marker;
 
@@ -89,6 +123,7 @@ function initMap() {
   }
   map.fitBounds(bounds);
 };
+
 
 //This function populate the infowindow with the infomation set when the marker is clicked.
 //In this case one info window
@@ -134,8 +169,14 @@ var FinnishUniversitiesViewModel = function() {
 
   var finnishUniverity = function(university){
     this.name = university.name;
-    //this.marker = university.marker
+    this.marker = university.marker
   };
+
+  // var shopName = function(shopArray){
+  //   for (var i = 0; i < shopArray.length; i++) {
+  //     this.name = shopArray[i].name;
+  //   }
+  // }
 
   //Knockout observable array is created
   self.finnishUniversitiesList = ko.observableArray([]);
@@ -154,6 +195,15 @@ var FinnishUniversitiesViewModel = function() {
     console.log('finnishUniversitiesList clicked')
     google.maps.event.trigger(university.marker, 'click')
   };
+
+  // Implementing coffe shops near list
+
+  self.coffeeShopsList = ko.observableArray([]);
+
+  coffeeShops.forEach(function(university){
+    self.coffeeShopsList.push(new shopName(university))
+
+  })
 
 
 
@@ -189,6 +239,7 @@ var FinnishUniversitiesViewModel = function() {
   })
 
 };
+
 
 // A global variable to store an instance of View Model
 var fU = new FinnishUniversitiesViewModel();

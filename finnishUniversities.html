@@ -28,11 +28,19 @@
         </div><br>
         <div class="row full">
         <div class="col-md-4 full" id="list">
+          <div id="top">
             <h3>Universities</h3>
             <input  data-bind="textInput: uniSearchInput" type="text">
             <ul data-bind="foreach: filterUniversity">
               <li data-bind="text: name, click:$parent.displayMarkerInfo"></li>
             </ul>
+          </div>
+          <div id="down">
+            hello coffeshops
+            <ul data-bind="foreach:coffeeShopsList">
+              <li data-bind="text: name"></li>
+            </ul>
+          </div>
         </div>
         <div class="col-md-8">
           <div class="embed-responsive embed-responsive-21by9" id="map">
