@@ -95,9 +95,10 @@ function initMap() {
       success: function(data) {
         
         var venue = data.response.venues;
-
-        console.log(venue)
-        }
+        coffeeShops.push(venue)
+        //console.log(venue)
+        fU.coffeeShopsList()[i].coffeeShops.push(venue);
+      }
 
     })
 
@@ -167,10 +168,12 @@ var FinnishUniversitiesViewModel = function() {
 
   var self = this;
 
-  var finnishUniverity = function(university){
+  var finnishUniversity = function(university){
     this.name = university.name;
     this.marker = university.marker
+    this.coffeeShops = ko.observableArray([]);
   };
+
 
   // var shopName = function(shopArray){
   //   for (var i = 0; i < shopArray.length; i++) {
@@ -186,7 +189,7 @@ var FinnishUniversitiesViewModel = function() {
 
   //List of Universities is pushed into the Knockout observable array
   universities.forEach(function(university){
-    self.finnishUniversitiesList.push( new finnishUniverity(university) )
+    self.finnishUniversitiesList.push( new finnishUniversity(university) )
   });
 
   // This function initiates displays the required info on the maps marker 
@@ -200,10 +203,12 @@ var FinnishUniversitiesViewModel = function() {
 
   self.coffeeShopsList = ko.observableArray([]);
 
-  coffeeShops.forEach(function(university){
-    self.coffeeShopsList.push(new shopName(university))
+  self.currentUniversity = ko.observable( self.coffeeShopsList() [0] );
 
-  })
+  // coffeeShops.forEach(function(university){
+  //   self.coffeeShopsList.push(new finnishUniversity(university))
+
+  // })
 
 
 
