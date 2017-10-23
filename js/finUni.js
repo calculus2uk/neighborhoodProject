@@ -94,10 +94,11 @@ function initMap() {
       },
       success: function(data) {
         
-        var venue = data.response.venues;
+        var venue = data.response.venues[0];
         coffeeShops.push(venue)
-        //console.log(venue)
-        fU.coffeeShopsList()[i].coffeeShops.push(venue);
+        console.log(venue)
+        //fU.coffeeShopsList()[i].coffeeShops.push(venue);
+        fU.coffeeShopsList()[i].coffeeShops(data.response.venues[0])
       }
 
     })

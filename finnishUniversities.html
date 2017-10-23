@@ -22,23 +22,23 @@
 
         </nav>
         <div class="row">
-          <div class="col-md-12 text-center">
-            <span class="badge badge-info"><h2>Multidiciplinary Universities in finland</h2></span>
+          <div class="col-md-12 text-center full">
+            <span class="badge badge-info"><h2 id="text">Multidiciplinary Universities in finland</h2></span>
           </div>
         </div><br>
         <div class="row full">
         <div class="col-md-4 full" id="list">
           <div id="top">
             <h3>Universities</h3>
-            <input  data-bind="textInput: uniSearchInput" type="text">
+            <input  data-bind="textInput: uniSearchInput" type="text" class="form-control" placeholder="Search University">
             <ul data-bind="foreach: filterUniversity">
               <li data-bind="text: name, click:$parent.displayMarkerInfo"></li>
             </ul>
           </div>
           <div id="down">
-            hello coffeshops
-            <ul >
-              <li></li>
+            <span class="badge badge-info"><h3>List of Coffee Shops Nearby</h3></span>
+            <ul data-bind="foreach:currentUniversity().coffeeShops">
+              <li data-bind="text: name"></li>
             </ul>
           </div>
         </div>

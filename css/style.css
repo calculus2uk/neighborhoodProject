@@ -26,10 +26,38 @@ ul {
 }
 
 #list{
-	text-align: center;;
+	text-align: center;
+	background-color: #ADD8E6;
 }
 
 #down{
 	position: absolute;
 	float: center;
+}
+
+@media screen and (max-width: 320px) {
+    h2, h3 {
+        font-size: 1.5em;
+    }
+}
+
+/* sm */
+@media screen and (min-width: 321px) {
+    h2, h3 {
+        font-size: 1.6em;
+    }
+}
+
+/* md */
+@media screen and (min-width: 992px) {
+    h2, h3 {
+        font-size: 2.5em;
+    }
+}
+
+/* lg */
+@media screen and (min-width: 1200px) {
+    h2, h3 {
+        font-size: 3.0em;
+    }
 }
