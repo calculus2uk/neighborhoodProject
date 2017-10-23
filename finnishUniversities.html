@@ -21,32 +21,32 @@
           <a class="navbar-brand" href="#">Project 5</a>
 
         </nav>
-        <div class="row">
+        <section class="row"> <!-- Title section starts -->
           <div class="col-md-12 text-center full">
-            <span class="badge badge-info"><h2 id="text">Multidiciplinary Universities in finland</h2></span>
+            <span class="badge badge-success"><h2 id="text">Multidiciplinary Universities in finland</h2></span>
           </div>
-        </div><br>
-        <div class="row full">
-        <div class="col-md-4 full" id="list">
-          <div id="top">
-            <h3>Universities</h3>
-            <input  data-bind="textInput: uniSearchInput" type="text" class="form-control" placeholder="Search University">
-            <ul data-bind="foreach: filterUniversity">
-              <li data-bind="text: name, click:$parent.displayMarkerInfo"></li>
-            </ul>
-          </div>
-          <div id="down">
-            <span class="badge badge-info"><h3>List of Coffee Shops Nearby</h3></span>
-            <ul data-bind="foreach:currentUniversity().coffeeShops">
-              <li data-bind="text: name"></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-8">
-          <div class="embed-responsive embed-responsive-21by9" id="map">
-          </div>
-        </div>
-      </div>
+        </section><br><!--Title section ends-->
+        <section class="row full"><!--section wrapper for Uni and coffe shops starts-->
+          <section class="col-md-2 full" id="list">
+            <div id="top"><!--list of universities starts-->
+              <h3>Universities</h3>
+              <input  data-bind="textInput: uniSearchInput" type="text" class="form-control" placeholder="Search University">
+              <ul data-bind="foreach: filterUniversity">
+                <li data-bind="text: name, click:$parent.displayMarkerInfo"></li>
+              </ul>
+            </div><!--list of universities ends-->
+            <div id="down" class="col-md-2"><!--Coofee shops nearby section starts-->
+              <span class="badge badge-success"><h3 class="text-center">List of Coffee Shops Nearby</h3></span>
+              <ul data-bind="foreach:currentUniversity().coffeeShops">
+                <li data-bind="text: name"></li>
+              </ul>
+            </div><!--Coofee shops nearby section ends-->
+          </section>
+          <section class="col-md-8"><!--Map starts-->
+            <div class="embed-responsive embed-responsive-21by9" id="map">
+            </div>
+          </section><!--Map ends-->
+        </section><!--section wrapper for Uni and coffe shops ends-->
 
     </div><!--Container div ends-->
     

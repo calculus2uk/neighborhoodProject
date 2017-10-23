@@ -80,7 +80,7 @@ function initMap() {
     var lng = position.lng;
     var query = 'coffee';
 
-    var foursquareApiUrl = apiUrl + '?ll='+ lat + ',' + lng + '&query='+ query + '&client_id=' + foursquareClientID +  '&client_secret=' + foursquareSecret +'&v=' + foursquareVersion;
+    var foursquareApiUrl = apiUrl + '?ll='+ lat + ',' + lng + '&query='+ query + '&client_id=' + foursquareClientID +  '&client_secret=' + foursquareSecret +'&v=' + foursquareVersion + '&limit=' + 10;
     //console.log(foursquareApiUrl);
 
     $.ajax({
@@ -94,7 +94,7 @@ function initMap() {
       },
       success: function(data) {
         
-        var venue = data.response.venues[0];
+        var venue = data.response.venues;
         coffeeShops.push(venue)
         console.log(venue)
         //fU.coffeeShopsList()[i].coffeeShops.push(venue);
