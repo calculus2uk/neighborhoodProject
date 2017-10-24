@@ -4,11 +4,13 @@ body {
 	height: 100%;
 	margin: 0;
 }
-html{
+
+html {
 	height: 100%;
 	padding: 0;
 	margin: 0;
 }
+
 .container-fluid {
 	height: 100%;
 	position: relative;
@@ -21,43 +23,47 @@ html{
 .full {
 	height: 100%;
 }
+
 ul {
   list-style-type: none;
 }
 
-#list{
+#list {
 	text-align: center;
 	background-color: #ADD8E6;
 }
 
-#down{
+#down {
 	position: absolute;
-	float: center;
 }
 
 @media screen and (max-width: 320px) {
-    h2, h3 {
+    h2,
+    h3 {
         font-size: 1.5em;
     }
 }
 
 /* sm */
 @media screen and (min-width: 321px) {
-    h2, h3 {
+    h2,
+    h3 {
         font-size: 1.6em;
     }
 }
 
 /* md */
 @media screen and (min-width: 992px) {
-    h2, h3 {
-        font-size: 2.5em;
+    h2,
+    h3 {
+        font-size: 2.1em;
     }
 }
 
 /* lg */
 @media screen and (min-width: 1200px) {
-    h2, h3 {
-        font-size: 1.3em;
+    h2,
+    h3 {
+        font-size: 2.9em;
     }
 }

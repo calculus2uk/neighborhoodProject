@@ -3,10 +3,6 @@ var map, largeInfoWindow;
 
 //Creating a global markers array
 var markers = [];
-var coffeeShops = [];
-var coffeeShopsNames = [];
-var namesArray = [];
-
 
 // Listing the Multidisciplinary universities. These is what will be shown to the user
 // Source wikipedia 10.10.2017 
@@ -31,9 +27,229 @@ var universities = [
 // Function to initialize the map within the map div
 function initMap() {
 
+  // Google maps styles from https://mapstyle.withgoogle.com/
+  var styles = [
+      {
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#ebe3cd"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#523735"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#f5f1e6"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#c9b2a6"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#dcd2be"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#ae9e90"
+          }
+        ]
+      },
+      {
+        "featureType": "landscape.natural",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#93817c"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#a5b076"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#447530"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#f5f1e6"
+          }
+        ]
+      },
+      {
+        "featureType": "road.arterial",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#fdfcf8"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#f8c967"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#e9bc62"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway.controlled_access",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#e98d58"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway.controlled_access",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#db8555"
+          }
+        ]
+      },
+      {
+        "featureType": "road.local",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#806b63"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#8f7d77"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#ebe3cd"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.station",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#b9d3c2"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#92998d"
+          }
+        ]
+      }
+  ];
+
+
   map = new google.maps.Map(document.getElementById('map'), {
   center: {lat: 60.172635, lng: 24.951042},
-  zoom: 13
+  zoom: 13,
+  styles: styles,
+  mapTypeControl: false
   });
 
   // initialising the info window
@@ -52,7 +268,7 @@ function initMap() {
   var highlightedIcon = makeMarkerIcon('FFFF24');
 
   //Using the universities array to create an array of markers on initialize
-  for (var i = 0; i < universities.length; i++) {
+  universities.forEach(function(university, i) {
     //Get the position from the Universities array
     var position = universities[i].location;
     var name = universities[i].name;
@@ -75,8 +291,8 @@ function initMap() {
     // Setting up foursquare
 
     var apiUrl = 'https://api.foursquare.com/v2/venues/search';
-    var foursquareClientID = 'ZJ5YPYPYWFUXLYKAHL34C3N5WHHDJ1TQ1E20Z3WYWQHXN0RZ';
-    var foursquareSecret = 'IGJIWX5STYGNY2EYPMHZB1L3NS35BB1C3DEM0XNGUGVL5EIO';
+    var foursquareClientID = 'G3FJ4CIV1G5ACHP1QDFS2Y4THHV2IIJ4VHUBVYPDH4WPWBAH';
+    var foursquareSecret = 'R4BGKGLSB2EXI3MXHYXZ342LSHZ5RAC5AM3EWSMQAXJUZK2M';
     var foursquareVersion =  '20171012';
     var lat = position.lat;
     var lng = position.lng;
@@ -96,22 +312,16 @@ function initMap() {
       },
       success: function(data) {
         //var venue = [];
-        var venue = data.response.venues;
+        var venues = data.response.venues;
+        console.log('index:', i)
         
-        coffeeShops.push(data.response.venues)
-        
-        var getNamesfun = function(array1){
-          array1.forEach(function(array2){
-            //coffeeShops.push(array2.name)
-            console.log(array2.name);
-          });
-        };
-        venue.forEach(function(university){
-          namesArray.push(getNamesfun(university));
-        })
         //fU.coffeeShopsList()[i].coffeeShops.push(venue);
-        fU.coffeeShopsList()[i].coffeeShops(data.response.venues)
-      }
+        //fU.coffeeShopsList()[0].coffeeShops.push(venues)
+        fU.finnishUniversitiesList()[i].coffeeShops(venues);
+      },
+      error: function(e){
+        alert("Sorry Couldnt Load Data!!!")
+      },
 
     })
 
@@ -134,7 +344,8 @@ function initMap() {
       marker.addListener('mouseout', function() {
         this.setIcon(defaultIcon);
       });
-  }
+  });
+  
   map.fitBounds(bounds);
 };
 
@@ -177,6 +388,7 @@ function makeMarkerIcon(markerColor) {
 //https://discussions.udacity.com/t/location-list-button-array-and-click-events/290058/18
 //Sarah did well explaining how the google.maps.event.trigger works which 
 //initially I was struggling with.
+//1 one 1 appointments with Karol really helped me simplify things.
 var FinnishUniversitiesViewModel = function() {
 
   var self = this;
@@ -208,21 +420,16 @@ var FinnishUniversitiesViewModel = function() {
   // This function initiates displays the required info on the maps marker 
   //when the observarble array items is clicked
   self.displayMarkerInfo = function(university){
-    console.log('finnishUniversitiesList clicked')
+    //console.log('finnishUniversitiesList clicked')
+    //console.log(university.coffeeShops()[0].name)
+    //console.log(university.coffeeShops())
+    self.coffeeShopsList(university.coffeeShops())
     google.maps.event.trigger(university.marker, 'click')
   };
 
   // Implementing coffe shops near list
 
   self.coffeeShopsList = ko.observableArray([]);
-
-  self.currentUniversity = ko.observable( self.coffeeShopsList() [0] );
-
-  // coffeeShops.forEach(function(university){
-  //   self.coffeeShopsList.push(new finnishUniversity(university))
-
-  // })
-
 
 
   //Implementing the filter functionality

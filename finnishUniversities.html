@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <!-- Required meta tags -->
+    <title>Multidisciplinary Universities In Finland</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -15,7 +16,7 @@
 
     <div class="container-fluid">
         <nav class="navbar navbar-toggleable-md navbar navbar-inverse bg-inverse navbar fixed-top">
-          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <a class="navbar-brand" href="#">Project 5</a>
@@ -23,11 +24,11 @@
         </nav>
         <section class="row"> <!-- Title section starts -->
           <div class="col-md-12 text-center full">
-            <span class="badge badge-success"><h2 id="text">Multidiciplinary Universities in finland</h2></span>
+            <h2 id="text"><span class="badge badge-success">Multidiciplinary Universities in finland</span></h2>
           </div>
         </section><br><!--Title section ends-->
         <section class="row full"><!--section wrapper for Uni and coffe shops starts-->
-          <section class="col-md-2 full" id="list">
+          <section class="col-md-4 full" id="list">
             <div id="top"><!--list of universities starts-->
               <h3>Universities</h3>
               <input  data-bind="textInput: uniSearchInput" type="text" class="form-control" placeholder="Search University">
@@ -35,9 +36,9 @@
                 <li data-bind="text: name, click:$parent.displayMarkerInfo"></li>
               </ul>
             </div><!--list of universities ends-->
-            <div id="down" class="col-md-2"><!--Coofee shops nearby section starts-->
-              <span class="badge badge-success"><h3 class="text-center">List of Coffee Shops Nearby</h3></span>
-              <ul data-bind="foreach:currentUniversity().coffeeShops">
+            <div id="down"><!--Coofee shops nearby section starts-->
+              <h3 class="text-center"><span class="badge badge-success">List of Coffee Shops Nearby</span></h3>
+              <ul data-bind="foreach: coffeeShopsList">
                 <li data-bind="text: name"></li>
               </ul>
             </div><!--Coofee shops nearby section ends-->

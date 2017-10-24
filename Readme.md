@@ -16,9 +16,8 @@ The following technologies were used to desgine this app.
 # Instructions
  - Download or clone the project.
  - Open the index.html in your browser.
- - 
+ - Click on any university in the list to display its location on the map and also the first ten coffee shops around.
  
-
 
 
 
@@ -26,6 +25,7 @@ The following technologies were used to desgine this app.
  - The Udacity Team
  - FourSquare team for developing this great API
  - Google Team
+ - https://mapstyle.withgoogle.com/
  
 # Lincense
 MIT License
