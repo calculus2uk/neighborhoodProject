@@ -313,17 +313,17 @@ function initMap() {
       success: function(data) {
         //var venue = [];
         var venues = data.response.venues;
-        console.log('index:', i)
+        console.log('index:', i);
         
         //fU.coffeeShopsList()[i].coffeeShops.push(venue);
         //fU.coffeeShopsList()[0].coffeeShops.push(venues)
         fU.finnishUniversitiesList()[i].coffeeShops(venues);
       },
       error: function(e){
-        alert("Sorry Couldnt Load Data!!!")
+        alert("Sorry Couldnt Load Data!!!");
       },
 
-    })
+    });
 
 
     // Pass the marker from the initMap to the FinnishUnivesity ko observarble array
@@ -347,7 +347,7 @@ function initMap() {
   });
   
   map.fitBounds(bounds);
-};
+}
 
 
 //This function populate the infowindow with the infomation set when the marker is clicked.
@@ -361,9 +361,9 @@ function populateInfoWindow(marker, infowindow){
     //clear the marker propety if infowwindow is closed.
     infowindow.addListener('closeclick', function() {
       infowindow.setMarker(null);
-    })
+    });
   }
-};
+}
 
 // This function takes in a COLOR, and then creates a new marker
 // icon of that color. The icon will be 21 px wide by 34 high, have an origin
@@ -377,7 +377,7 @@ function makeMarkerIcon(markerColor) {
       new google.maps.Point(10, 34),
       new google.maps.Size(21,34));
     return markerImage;
-};
+}
 
 
 
@@ -395,7 +395,7 @@ var FinnishUniversitiesViewModel = function() {
 
   var finnishUniversity = function(university){
     this.name = university.name;
-    this.marker = university.marker
+    this.marker = university.marker;
     this.coffeeShops = ko.observableArray([]);
   };
 
@@ -414,7 +414,7 @@ var FinnishUniversitiesViewModel = function() {
 
   //List of Universities is pushed into the Knockout observable array
   universities.forEach(function(university){
-    self.finnishUniversitiesList.push( new finnishUniversity(university) )
+    self.finnishUniversitiesList.push( new finnishUniversity(university) );
   });
 
   // This function initiates displays the required info on the maps marker 
@@ -423,8 +423,8 @@ var FinnishUniversitiesViewModel = function() {
     //console.log('finnishUniversitiesList clicked')
     //console.log(university.coffeeShops()[0].name)
     //console.log(university.coffeeShops())
-    self.coffeeShopsList(university.coffeeShops())
-    google.maps.event.trigger(university.marker, 'click')
+    self.coffeeShopsList(university.coffeeShops());
+    google.maps.event.trigger(university.marker, 'click');
   };
 
   // Implementing coffe shops near list
@@ -451,17 +451,17 @@ var FinnishUniversitiesViewModel = function() {
 
         if (searchUniversity.name.toLowerCase().indexOf(filter) !== -1) {
 
-          searchUniversity.marker.setVisible(true)
+          searchUniversity.marker.setVisible(true);
         } else {
 
-          searchUniversity.marker.setVisible(false)
+          searchUniversity.marker.setVisible(false);
         }
 
         return searchUniversity.name.toLowerCase().indexOf(filter) !== -1;
 
       });
     }
-  })
+  });
 
 };
 
