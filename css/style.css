@@ -58,6 +58,6 @@ ul {
 /* lg */
 @media screen and (min-width: 1200px) {
     h2, h3 {
-        font-size: 3.0em;
+        font-size: 1.3em;
     }
 }

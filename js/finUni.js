@@ -5,6 +5,7 @@ var map, largeInfoWindow;
 var markers = [];
 var coffeeShops = [];
 var coffeeShopsNames = [];
+var namesArray = [];
 
 
 // Listing the Multidisciplinary universities. These is what will be shown to the user
@@ -20,7 +21,8 @@ var universities = [
   {name: 'University of Lapland', location: {lat: 66.485863, lng: 25.715528}, Established_Year: 1979},
   {name: 'University of Eastern Finland', location: {lat: 62.603598, lng: 29.744203}, Established_Year: 2010},
   {name: 'University of Vaasa', location: {lat: 63.105084, lng: 21.591550}, Established_Year: 1968},
-  {name: 'University of Jyväskylä', location: {lat: 62.236532, lng: 25.731634}, Established_Year: 1934}
+  {name: 'University of Jyväskylä', location: {lat: 62.236532, lng: 25.731634}, Established_Year: 1934},
+  {name: 'Aalto University', location: {lat: 60.186669, lng: 24.827682}, Established_Year: 2010}
 
 ];
 
@@ -93,12 +95,22 @@ function initMap() {
         async: true
       },
       success: function(data) {
-        
+        //var venue = [];
         var venue = data.response.venues;
-        coffeeShops.push(venue)
-        console.log(venue)
+        
+        coffeeShops.push(data.response.venues)
+        
+        var getNamesfun = function(array1){
+          array1.forEach(function(array2){
+            //coffeeShops.push(array2.name)
+            console.log(array2.name);
+          });
+        };
+        venue.forEach(function(university){
+          namesArray.push(getNamesfun(university));
+        })
         //fU.coffeeShopsList()[i].coffeeShops.push(venue);
-        fU.coffeeShopsList()[i].coffeeShops(data.response.venues[0])
+        fU.coffeeShopsList()[i].coffeeShops(data.response.venues)
       }
 
     })
