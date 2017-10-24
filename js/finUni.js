@@ -344,7 +344,21 @@ function initMap() {
       marker.addListener('mouseout', function() {
         this.setIcon(defaultIcon);
       });
-  });
+
+    google.maps.event.addListener(marker, 'click', (function(marker) {
+      return function(event) {
+
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+          setTimeout(function() {
+            marker.setAnimation(null);
+            }, 2000);
+          }
+        };
+      })(marker));
+    });
   
   map.fitBounds(bounds);
 }
@@ -472,3 +486,8 @@ var fU = new FinnishUniversitiesViewModel();
 
 // Apply the bindings to the global instance
 ko.applyBindings(fU);
+
+//Google maps API Error handling
+function googleMapsError() {
+  alert("Sorry!!  There seems to be a problem with the Google Maps Loading")
+}
