@@ -35,6 +35,8 @@ ul {
 
 #down {
 	position: absolute;
+	height: 150px;
+	overflow: scroll;
 }
 
 @media screen and (max-width: 320px) {

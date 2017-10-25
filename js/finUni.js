@@ -378,7 +378,7 @@ function populateInfoWindow(marker, infowindow){
     infowindow.open(map, marker);
     //clear the marker propety if infowwindow is closed.
     infowindow.addListener('closeclick', function() {
-      infowindow.setMarker(null);
+      infowindow.setMap(null);
     });
   }
 }
@@ -453,6 +453,12 @@ var FinnishUniversitiesViewModel = function() {
     var filter = self.uniSearchInput().toLowerCase();
 
     if (!filter) {
+
+      self.finnishUniversitiesList().forEach(function(university) {
+        if (university.marker) {
+          university.marker.setVisible(true);
+        }
+      });
 
       return self.finnishUniversitiesList();
 
