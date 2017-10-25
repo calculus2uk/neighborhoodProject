@@ -487,4 +487,4 @@ ko.applyBindings(fU);
 //Google maps API Error handling
 function googleMapsError() {
   alert("Sorry!!  There seems to be a problem with the Google Maps Loading");
-};
+}
