@@ -346,9 +346,11 @@ function initMap() {
         this.setIcon(defaultIcon);
       });
 
+    // Functionality to animate the marker or or its associate when clicked.
     google.maps.event.addListener(marker, 'click', (function(marker) {
       return function(event) {
-        console.log(fU.finnishUniversitiesList()[marker.id].coffeeShops())
+        // console.log(fU.finnishUniversitiesList()[marker.id].coffeeShops());
+        // Clicking on the marker also displays the foursquare api 
         fU.coffeeShopsList(fU.finnishUniversitiesList()[marker.id].coffeeShops());
         if (marker.getAnimation() !== null) {
           marker.setAnimation(null);
@@ -414,13 +416,6 @@ var FinnishUniversitiesViewModel = function() {
     this.marker = university.marker;
     this.coffeeShops = ko.observableArray([]);
   };
-
-
-  // var shopName = function(shopArray){
-  //   for (var i = 0; i < shopArray.length; i++) {
-  //     this.name = shopArray[i].name;
-  //   }
-  // }
 
   //Knockout observable array is created
   self.finnishUniversitiesList = ko.observableArray([]);
@@ -491,5 +486,5 @@ ko.applyBindings(fU);
 
 //Google maps API Error handling
 function googleMapsError() {
-  alert("Sorry!!  There seems to be a problem with the Google Maps Loading")
-}
+  alert("Sorry!!  There seems to be a problem with the Google Maps Loading");
+};
