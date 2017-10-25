@@ -336,6 +336,7 @@ function initMap() {
     marker.addListener('click', function() {
       populateInfoWindow(this, largeInfoWindow);
     });
+
     //Two event listeners - one for mouseover, one for mouseout,
       //to change the colors back and forth.
       marker.addListener('mouseover', function() {
@@ -347,7 +348,8 @@ function initMap() {
 
     google.maps.event.addListener(marker, 'click', (function(marker) {
       return function(event) {
-
+        console.log(fU.finnishUniversitiesList()[marker.id].coffeeShops())
+        fU.coffeeShopsList(fU.finnishUniversitiesList()[marker.id].coffeeShops());
         if (marker.getAnimation() !== null) {
           marker.setAnimation(null);
         } else {
